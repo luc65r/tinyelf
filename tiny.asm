@@ -51,7 +51,8 @@ ph:
     ; p_type has to be PT_LOAD
     dd 1                        ; e_entry           p_type
     ; p_flags first 3 bits have to be rx or rwx
-    ;         last 29 bits could be clobbered
+    ;         next 8 bits can be clobbered
+    ;         last 21 have to be 0
     dd 5                        ; |                 p_flags
     ; e_phoff has to be the offset of the program header in the file
     dq 24                       ; e_phoff           p_offset
