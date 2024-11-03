@@ -43,8 +43,9 @@ e_ident_end:
 
     ; e_type has to be ET_EXEC
     dw 2                        ; e_type
-    ; clobberable
+    ; e_machine has to be EM_X86_64
     dw 0x3e                     ; e_machine
+    ; clobberable
     dd 1                        ; e_version
 ph:
     ; p_type has to be PT_LOAD
