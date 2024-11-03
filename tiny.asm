@@ -26,7 +26,7 @@
 bits 64
 
 ;; p_vaddr - p_offset
-org 0x700000000
+org 0x500000000
 
 eh:
     ; ELF magic has to be present
@@ -49,16 +49,16 @@ e_ident_end:
 ph:
     ; p_type has to be PT_LOAD
     dd 1                        ; e_entry           p_type
-    ; p_flags first byte has to be rx or rwx
-    ;         last 3 bytes could be clobbered
-    dd 7                        ; |                 p_flags
+    ; p_flags first 3 bits have to be rx or rwx
+    ;         last 29 bits could be clobbered
+    dd 5                        ; |                 p_flags
     ; e_phoff has to be the offset of the program header in the file
     dq 24                       ; e_phoff           p_offset
     ; As p_offset is forced to 0x18 by e_phoff, and (p_vaddr - p_offset) %
     ; page_size has to be 0, the low bytes of p_vaddr are forced to 0x18.
-    ; e_entry is forced to 0x700000001 by p_type and p_flags, so we can load the
-    ; program at 0x700000000.
-    dq 0x700000018              ; e_shoff           p_vaddr
+    ; e_entry is forced to 0x500000001 by p_type and p_flags, so we can load the
+    ; program at 0x500000000.
+    dq 0x500000018              ; e_shoff           p_vaddr
     ; clobberable
     dd 0                        ; e_flags           p_paddr
     dw 0                        ; e_ehsize          |
